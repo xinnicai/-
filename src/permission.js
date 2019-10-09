@@ -12,6 +12,7 @@ var data = false // 本次demo用变量凑合一下,项目里面应该放到vuex
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (getToken()) {
+    debugger
     // 判断cookice是否存在 不存在即为未登录
     if (to.path !== '/login') {
       if (data) {
@@ -27,6 +28,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     data = false
+    gotoRouter(to, next)
     if (whiteList.indexOf(to.path) !== -1) {
       // 免登陆白名单 直接进入
       next()
@@ -51,52 +53,6 @@ function gotoRouter(to, next) {
     .then(res => {
       // debugger
       console.log('解析后端动态路由', res.data)
-      let routerList=[
-        {children: [
-          {
-            children: [],
-            code: null,
-            description: null,
-            generatemenu: 0,
-            icon: "menu1",
-            id: 2,
-            name: "Menu1",
-            parentId: 1,
-            permName: null,
-            redirect: "",
-            sort: 0,
-            title: "Menu1",
-            url: "menu1",
-          },{
-            children: null,
-            code: null,
-            description: null,
-            generatemenu: 0,
-            icon: "menu2",
-            id: 3,
-            name: "Menu2",
-            parentId: 1,
-            permName: null,
-            redirect: "",
-            sort: 0,
-            title: "Menu2",
-            url: "menu2",
-          }
-
-        ],
-        code: null,
-        description: null,
-        generatemenu: 0,
-        icon: "nested",
-        id: 1,
-        name: "Nested",
-        parentId: null,
-        permName: null,
-        redirect: "/nested/menu1",
-        sort: 0,
-        title: "Nested",
-        url: "/nested",}
-      ]
       const asyncRouter = addRouter(res.data.router) // 进行递归解析
       store.dispatch('setroles', res.data.permit)
       // 一定不能写在静态路由里面,否则会出现,访问动态路由404的情况.所以在这列添加

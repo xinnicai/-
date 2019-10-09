@@ -37,7 +37,7 @@
           <el-row style="margin-top:10px" class="filter-tree el-tree">
             <el-tree ref="dicGroupTree" highlight-current icon-class='el-icon-folder' :data="dicGroups" :props="{label:'name'}" :filter-node-method="filterDics" node-key="id" :default-expanded-keys="defaultExpand" @node-click="groupSelected">
               <span class="span-ellipsis" slot-scope="{ node, data }">
-                <el-tooltip class="item" effect="dark" :content="node.label" placement="bottom" ::open-delay="1000">
+                <el-tooltip class="item" effect="dark" :content="node.label" placement="bottom" :open-delay="1000">
                   <span>{{ node.label }}</span></el-tooltip>
               </span>
             </el-tree>
@@ -74,7 +74,7 @@
           </el-row>
           <el-row style="margin-top: 10px;margin-bottom:20px;float: right;">
             <el-pagination @size-change="loadItems" @current-change="loadItems" :current-page.sync="dicItemsData.currentPage" :page-sizes="[10, 25, 50, 100]" :page-size.sync="dicItemsData.limit" layout="total, sizes, prev, pager, next, jumper" :total="dicItemsData.totalItems"></el-pagination>
-          </el-row>
+		  </el-row>
         </el-card>
       </el-col>
     </el-row>
@@ -466,7 +466,7 @@ import axios from 'axios'
 	            }).then(res => {
 	                let data = res.data;
 	                if (data.success) {
-	                    this.dicGroups.splice(0, this.dicGroups.length);
+	                    this.dicGroups=[];
 	                    data.content.forEach(g => this.dicGroups.push(g));
 	                    this.selectedDic = null;
 	                    this.selectedGroup = null;
@@ -687,7 +687,8 @@ import axios from 'axios'
 	         *
 	         */
 	        // 加载字典项
-	        loadItems() {
+	        loadItems(val) {
+				this.dicItemsData.limit=val;
 	            if (!this.selectedDic) {
 	                this.$message.error('请选择字典');
 	                return;
@@ -892,16 +893,18 @@ import axios from 'axios'
     }
 
 	.rightCard{
-		min-height: calc(100vh - 145px);
-		/*max-height:calc(100vh - 180px);*/
+		min-height: calc(100vh - 150px);
+		max-height:calc(100vh - 150px);
+		overflow: auto;
 	}
 	.leftCard{
-		min-height: calc(100vh - 145px);
-		max-height:calc(100vh - 145px);
+		min-height: calc(100vh - 150px);
+		max-height:calc(100vh - 150px);
 	}
 	  .el-tree {
-        max-height:calc(100vh - 250px);
-        
+        max-height:calc(100vh - 260px);
+        min-height:calc(100vh - 260px);
+		overflow: auto;
     }
 	
 </style>

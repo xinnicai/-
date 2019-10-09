@@ -35,9 +35,11 @@ const user = {
       return new Promise((resolve, reject) => {
         login(username, userInfo.password)
           .then(response => {
-            const data = response.data
-            setToken(data.token)//存在cookie中
-            commit('SET_TOKEN', data.token)//存在vuex中
+            const data = response.content
+            debugger
+            this.$router.push({ path: '/prefix' })
+            setToken('admin')//存在cookie中
+            commit('SET_TOKEN', 'admin')//存在vuex中
             resolve()
           })
           .catch(error => {

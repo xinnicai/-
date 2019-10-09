@@ -82,7 +82,7 @@
 
 <script>
 import { isvalidUsername } from '@/utils/validate'
-
+import axios from 'axios'
 export default {
   name: 'Login',
   data() {
@@ -136,11 +136,10 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          debugger
           this.$store.dispatch('Login', this.formLabelAlign).then(() => {
             debugger
             this.loading = false
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({ path: '/prefix' })
           }).catch(() => {
             this.loading = false
           })
@@ -149,6 +148,29 @@ export default {
           return false
         }
       })
+      // this.$refs['loginForm'].validate((valid) => {
+      //       if (valid) {
+      //           axios({
+      //               url: this.baseUrl+'auth/login',
+      //               method: 'post',
+      //               headers: {},
+      //               data: this.formLabelAlign
+      //           }).then(res => {
+      //               let data = res.data;
+      //               if (data.success) {
+      //                 debugger
+      //                   this.loading = false
+      //                   this.$router.push({ path: this.redirect || '/' })
+      //               } else {
+      //                   this.$notify.error({
+      //                       title: '登录失败',
+      //                       message: !!data.errMsg ? data.errMsg : '登录失败，请重试',
+      //                       duration: 5000
+      //                   });
+      //               }
+      //           })
+      //       }
+      //   });
     },
     login(){}
   }
@@ -281,4 +303,11 @@ body, html {
         margin: 20px 0;
         height: calc(15vh);
     }
+    .el-input__inner {
+      line-height: 40px;
+      height: 40px; 
+  }
+  .el-button{
+      padding: 12px 20px !important;
+  }
 </style>

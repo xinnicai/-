@@ -29,6 +29,12 @@ export const StaticRouterMap = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
+  {
+    path: '/prefix',
+    name:'prefix',
+    component: () => import('@/views/login/prefix'),
+    hidden: true
+  },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
   {
     path: '/',

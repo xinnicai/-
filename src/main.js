@@ -25,7 +25,7 @@ Vue.component('Treeselect',Treeselect)
 Vue.use(ElementUI, { locale })
 directive()
 Vue.config.productionTip = false;
-Vue.prototype.baseUrl='http://yw.bsoft.com.cn:8888/bimp/'
+Vue.prototype.baseUrl='http://10.8.0.165:8083/bimp/'
 Vue.prototype.permissions = [];//当前用户权限
 Vue.prototype.sysConfig = {};//当前配置
 //判断是否包含权限
